@@ -16,6 +16,7 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-postcss');
+  grunt.loadNpmTasks('grunt-wrap');
 
 
   /**
@@ -68,6 +69,20 @@ module.exports = function ( grunt ) {
       '<%= compile_dir %>',
       '<%= temp_dir %>'
     ],
+
+
+    wrap: {
+      build_appjs: {
+        cwd: '.',
+        expand: true,
+        src: ['<%= app_files.js %>'],
+        options: {
+          seperator: '\n',
+          indent: '\t',
+          wrapper: ['module.prefix', 'module.suffix']
+        }
+      }
+    },
 
     /**
      * The `copy` task just copies files from A to B. We use it here to copy
@@ -458,7 +473,7 @@ module.exports = function ( grunt ) {
   grunt.registerTask( 'build', [
     'clean', 'html2js', 'less_imports:build', 'less:build',
     'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets', 'postcss',
-    'copy:build_appjs', 'copy:build_vendorjs', 'index:build', 'karmaconfig',
+    'wrap:build_appjs', 'copy:build_appjs', 'copy:build_vendorjs', 'index:build', 'karmaconfig',
     'karma:continuous'
   ]);
 

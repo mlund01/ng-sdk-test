@@ -55,6 +55,7 @@ json(jsonFile, function (err, file) {
             "grunt": "~0.4.1",
             "grunt-bump": "0.0.6",
             "grunt-contrib-clean": "^0.4.1",
+            'grunt-wrap': "^0.3.0",
             "grunt-contrib-concat": "^0.3.0",
             "grunt-contrib-copy": "^0.4.1",
             "grunt-contrib-less": "^0.11.4",
