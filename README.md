@@ -6,11 +6,38 @@ A seed project for custom Four51 Solutions built on AngularJS
 
 Node.js is required for the following node package manager (npm) tasks. If you don't have node.js installed, you can download it [here](http://nodejs.org/).
 
+
+Begin by downloading the necessary global node packages in your command line,
+
+`OrderCloud` lets you decide between using [Gulp](http://gulpjs.com) or
+[Grunt](http://gruntjs.org) as its build system, so [Node.js](http://nodejs.org) 
+is required. While Gulp comes standard with a command-line utility,
+Grunt does not; and Karma and Bower must end up in your global path for the build 
+system to find it, so Grunt, Karma, and Bower must be installed independently.
+
+If you 
 ```sh
 $ npm -g install grunt-cli karma bower
+```
+
+Once this is complete, you will need to download your local node packages. This will begin by
+downloading the packages listed under `'devDependencies'` in `~/package.json`. Once the initial install is
+complete, you will see a prompt on your command line, asking to specify your task runner (gulp or grunt).
+Enter your preferred task runner, and the remaining dependencies will be downloaded.
+
+```sh
 $ npm install
+```
+
+Finally, run the following commands to install the necessary bower packages, and create the build folder. Make sure
+you run build with your selected task runner (you will receive an error if you try running it with the wrong one)
+
+```sh
 $ bower install
-$ grunt build
+$
+$ grunt build 
+$ ....or....
+$ gulp build
 ```
 
 You should now have a few more directories in your project.
@@ -21,6 +48,14 @@ OrderCloud/
   |- node_modules/
   |- vendor/
 ```
+
+
+*****REMAINING README NEEDS TO INCLUDE TASK RUNNER UPDATES*****
+
+
+
+
+
 
 ## Configure WebStorm
 WebStorm is our chosen development IDE. It provides an interface for the capabilities of the seed projects configuration. 
@@ -56,31 +91,42 @@ OrderCloud/
   |- .bowerrc
   |- bower.json
   |- build.config.js
-  |- Gruntfile.js
+  |- Gruntfile.js || Gulpfile.js
   |- module.prefix
   |- module.suffix
   |- package.json
 ```
+
+
+*****REMAINING README NEEDS TO INCLUDE TASK RUNNER UPDATES*****
+
 
 ### Detailed Installation
 
 This section provides a little more detailed understanding of what goes into
 getting `OrderCloud` up and running. Though `OrderCloud` is really simple
 to use, it might help to have an understanding of the tools involved here, like
-Node.js and Grunt and Bower. If you're completely new to highly organized,
+Node.js, Grunt or Gulp, and Bower. If you're completely new to highly organized,
 modern JavaScript development, take a few short minutes to read [this overview
 of the tools](tools.md) before continuing with this section.
 
 Here it is:
 
-`OrderCloud` uses [Grunt](http://gruntjs.org) as its build system, so
-[Node.js](http://nodejs.org) is required. Also, Grunt by default no longer comes
-with a command-line utility and Karma and Bower must end up in your global path
-for the build system to find it, so they must be installed independently. Once
+`OrderCloud` lets you decide between using [Gulp](http://gulpjs.com) or
+[Grunt](http://gruntjs.org) as its build system, so [Node.js](http://nodejs.org) 
+is required. While Gulp comes standard with a command-line utility,
+Grunt does not; and Karma and Bower must end up in your global path for the build 
+system to find it, so Grunt, Karma, and Bower must be installed independently. Once
 you have Node.js installed, you can simply use `npm` to make it all happen:
 
+If you chose Grunt, run this,
 ```sh
 $ npm -g install grunt-cli karma bower
+```
+
+And if you chose Gulp, run this,
+```sh
+$ npm -g install karma bower
 ```
 
 And then install the remaining build dependencies locally:
