@@ -1,11 +1,17 @@
 /**
- * The `copy` task just copies files from A to B. We use it here to copy
- * our project assets (images, fonts, etc.) and javascripts into
- * `build_dir`, and then to copy the assets to `compile_dir`.
+ * The 'copy' task accomplishes a couple of sub-tasks. It's primary job is to copy
+ * files from point A to point B (in fact, that is all it's doing for
+ * any project asset file... images, fonts, etc.). It's secondary job is
+ * to wrap all project javascript files in an immediately invoked function
+ * expression (refer to John Papa's Angular Style Guide for more details on
+ * IIFE's and their relevance) before copying files over.
+ *
+ * Specifically, the first two tasks below copy project assets and javascript files into
+ * the 'build' directory (used in the 'build' task), while the final copies asset files
+ * into the 'compile' directory (used in the 'compile' task)
  */
 
-var config = require('gulp-oc-config')();
-var gulp = require('gulp');
+var wrap = require('gulp-wrapper');
 
 //TARGETS
 var appAssets = config.app_files.assets;
@@ -13,22 +19,25 @@ var vendorAssets = config.vendor_files.assets;
 var appJS = config.app_files.js;
 var vendorJS = config.vendor_files.js;
 
+gulp.task('copy', ['copy:build_assets', 'copy:build_js']);
+
 gulp.task('copy:build_assets', function() {
-    var stream = gulp.src([appAssets, vendorAssets])
+    return gulp.src(appAssets, vendorAssets)
         .pipe(gulp.dest(config.build + 'assets/'));
-    return stream;
 });
 
 gulp.task('copy:build_js', function() {
-    var stream = gulp.src([appJS, vendorJS])
+    return gulp.src(appJS, vendorJS)
+        .pipe(wrap({
+            header: "(function ( window, angular, undefined ) { 'use strict';\n",
+            footer: "})( window, window.angular );\n"
+        }))
         .pipe(gulp.dest(config.build));
-    return stream;
 });
 
 gulp.task('copy:compile_assets', function() {
-    var stream = gulp.src([config.build + 'assets/'])
-        .pipe(gulp.des(config.compile + 'assets/'));
-    return stream;
+    return gulp.src(config.build + 'assets/')
+        .pipe(gulp.dest(config.compile + 'assets/'));
 });
 
 

@@ -1,9 +1,9 @@
-var gulp = require('gulp');
+//Global gulp variables
+gulp = require('gulp');
+config = require('gulp-oc-config');
+
 var fs = require('fs');
 var path = require('path');
-
-var dirPath = "./Gulp";
-
 
 function walk(curDirPath) {
     fs.readdirSync(curDirPath).forEach(
@@ -17,6 +17,6 @@ function walk(curDirPath) {
         }
     });
 }
-walk(path.join(__dirname, "Gulp"));
+walk(path.join(__dirname, config.gulp_dir));
 
-gulp.task('default', ['copy']);
+gulp.task('default', ['clean']);
