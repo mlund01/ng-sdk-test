@@ -1,6 +1,6 @@
 //Global gulp variables
 gulp = require('gulp');
-config = require('gulp-oc-config');
+config = require('./gulpConfig');
 var fs = require('fs');
 var path = require('path');
 
@@ -19,3 +19,5 @@ function walk(curDirPath) {
 walk(path.join(__dirname, config.gulp_dir));
 
 gulp.task('default', ['clean']);
+
+gulp.task('copy', ['build:copy_assets', 'build:copy_js']);

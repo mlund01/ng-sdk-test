@@ -27,10 +27,12 @@ gulp.task('build:css', function() {
 
 });
 
-gulp.task('compile:css', function() {
-    return gulp.src(config.build + '**/*.css')
+gulp.task('compile:assets', function() {
+    return gulp.src(config.build + '**/*')
+        .pipe(cssFilter)
         .pipe(concat())
         .pipe(minify())
+        .pipe(cssFilter.restore())
         .pipe(gulp.dest(config.compile + 'assets/'))
 
 });
@@ -40,4 +42,9 @@ gulp.task('build:css_bower', function() {
         .pipe(cssFilter)
         .pipe(concat(currVersion + '.css'))
         .pipe(gulp.dest(config.build + 'assets'))
+});
+
+gulp.task('compile:assets', function() {
+    return gulp.src(config.build + 'assets/**/*', !config.build + 'assets/**/*.js')
+        .pipe(gulp.dest(config.compile + 'assets/'));
 });
