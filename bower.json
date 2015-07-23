@@ -1,9 +1,8 @@
 {
   "name": "orderCloud",
   "version": "0.0.3",
-  "devDependencies": {
+  "dependencies": {
     "angular": "~1.4.0",
-    "angular-mocks": "~1.4.0",
     "angular-sanitize": "~1.4.0",
     "angular-ui-router": "~0.2.14",
     "angular-messages": "~1.4.0",
@@ -14,5 +13,7 @@
     "font-awesome": "~4.3.0",
     "ordercloud-angular-sdk": "~0.2.8"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "angular-mocks": "~1.4.0"
+  }
 }
