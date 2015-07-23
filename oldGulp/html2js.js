@@ -3,7 +3,7 @@ var config = require('gulp-oc-config');
 var html2js = require('gulp-html2js');
 var concat = require('gulp-concat');
 
-gulp.task('templateCache', function() {
+gulp.task('build:templateCache', function() {
     return gulp.src(config.app_files.atpl)
         .pipe(html2js({
             base: 'src/app',

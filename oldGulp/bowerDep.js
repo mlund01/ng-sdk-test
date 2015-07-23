@@ -5,20 +5,17 @@ var concat = require('gulp-concat');
 var pkg = require('../package.json');
 var banner = config.banner;
 var currVersion = pkg.name + "-" + pkg.version;
+var mainBowerFiles = require('main-bower-files');
+var filter = require('gulp-filter');
+var jsFilter = filter('**/*.js');
 
-gulp.task('concat:build_css', function() {
-    gulp.src(config.vendor_files.css, config.build + '/assets/' + currVersion + '.css')
-        .pipe(gulp.dest(config.build + 'assets/' + currVersion + '.css'))
-});
-
-gulp.task('concat:compile_js', function() {
-    gulp.src(config.build + '**/*.js')
+gulp.task('build:js_bower', function() {
+    return gulp.src(mainBowerFiles())
+        .pipe(jsFilter)
         .pipe(concat(currVersion + '.js'))
         .pipe(header(banner, {pkg: pkg}))
-        .pipe(gulp.dest(config.compile))
+        .pipe(gulp.dest(config.build))
 });
-
-
 
 
 

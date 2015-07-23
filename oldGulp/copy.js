@@ -12,33 +12,23 @@
  */
 
 var wrap = require('gulp-wrapper');
+var mainBowerFiles = require('main-bower-files');
+var filter = require('gulp-filter');
 
 //TARGETS
-var appAssets = config.app_files.assets;
-var vendorAssets = config.vendor_files.assets;
 var appJS = config.app_files.js;
-var vendorJS = config.vendor_files.js;
 
-gulp.task('copy', ['copy:build_assets', 'copy:build_js']);
+gulp.task('copy', ['build:copy_assets', 'build:copy_js']);
 
-gulp.task('copy:build_assets', function() {
-    return gulp.src(appAssets, vendorAssets)
-        .pipe(gulp.dest(config.build + 'assets/'));
-});
-
-gulp.task('copy:build_js', function() {
-    return gulp.src(appJS, vendorJS)
+/*gulp.task('build:copy_js', function() {
+    return gulp.src(appJS)
+        .pipe(filter('**!/!*.js'))
         .pipe(wrap({
-            header: "(function ( window, angular, undefined ) { 'use strict';\n",
+            header: "(function ( window, angular, undefined ) {\n 'use strict';\n",
             footer: "})( window, window.angular );\n"
         }))
         .pipe(gulp.dest(config.build));
-});
-
-gulp.task('copy:compile_assets', function() {
-    return gulp.src(config.build + 'assets/')
-        .pipe(gulp.dest(config.compile + 'assets/'));
-});
+});*/
 
 
 /*COPIED GRUNT TASK
