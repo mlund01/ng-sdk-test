@@ -1,7 +1,9 @@
 *.sw*
 *~
 build/
+build2
 compile/
+compile2
 node_modules/
 vendor/
 temp/

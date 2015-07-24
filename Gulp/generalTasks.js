@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var config = require('./../gulpConfig');
 var wiredep = require('wiredep').stream;
 var inject = require('gulp-inject');
 var clean = require('gulp-clean');
@@ -13,31 +14,33 @@ var ignoreOption = function(configLoc) {
 };
 
 
-gulp.task('build', sequence('build:js_bower', 'build:copy_js', ['build:css', 'build:templateCache'], 'build:inject'));
+gulp.task('build', ['build:inject'], function() {
 
-gulp.task('build:inject', function() {
-    gulp.src(config.source + 'index.html')
-        .pipe(wiredep({ignorePath: '../'})) //inject bower components
-        .pipe(inject(gulp.src([  //inject app assets & js
-            config.build + "**/*.js",
-            config.build + '/**/*.css',
-            '!' + config.build + '/vendor/**/*'], {relative: true},{read: false})))
-        .pipe(gulp.dest('./', {cwd: config.build}))
-})
+});
+
+gulp.task('build:inject', ['build:js_bower', 'build:copy_js', 'build:templateCache', 'build:css'], function() {
+    return gulp
+        .src(config.source + 'index.html')
+        .pipe(inject(gulp.src(config.build + 'vendor/**/*.js', {read:false}), {name: 'bower', ignorePath: config.build.replace('.', ''), addRootSlash: false}))
+        .pipe(inject(gulp.src([config.build + 'src/**/*.js', config.build + 'assets/**/*.css'], {read:false}), {ignorePath: config.build.replace('.', ''), addRootSlash: false}))
+        .pipe(gulp.dest(config.build));
+});
 
 gulp.task('compile:inject', function() {
-    gulp.src(config.source + 'index.html')
+    return gulp
+        .src(config.source + 'index.html')
         .pipe(inject(gulp.src([
             config.compile + "**/*.js",
             config.compile + '/assets/' + currVersion + '.css'], {read: false}), {}))
-        .pipe(gulp.dest(config.compile))
+        .pipe(gulp.dest(config.compile));
 });
 
 gulp.task('masterClean', function() {
-    return gulp.src([config.build, config.compile, config.temp])
+    return gulp
+        .src([config.build, config.compile, config.temp])
         .pipe(clean({read:false}));
 });
 
-gulp.task('lint', function() {
-    gulp.src()
-});
+//gulp.task('lint', function() {
+//    gulp.src()
+//});

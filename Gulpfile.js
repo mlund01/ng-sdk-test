@@ -1,7 +1,7 @@
 //Global gulp variables
-gulp = require('gulp');
+var gulp = require('gulp');
 var fs = require('fs');
-config = require('./gulpConfig');
+var config = require('./gulpConfig');
 var path = require('path');
 
 
@@ -15,7 +15,7 @@ function walk(curDirPath) {
         if (stat.isFile()) {
             require(filePath);
         } else {
-            walk(filePath)
+            walk(filePath);
         }
     });
 }
