@@ -7,6 +7,7 @@ var temp = './.tmp/';
 var gulp_dir = './Gulp';
 
 module.exports = {
+    source: source,
     gulp_dir: gulp_dir,
     banner: ['/**',
         ' * <%= pkg.name %> - <%= pkg.description %>',
@@ -38,10 +39,6 @@ module.exports = {
         '!' + source + index
     ],
     index: index,
-    module: {
-        prefix: '(function () {\n"use strict";\n\n',
-        suffix: '\n\n}());'
-    },
     npm_pkg: './package.json',
     bower_pkg: './bower.json',
     src: source,
@@ -67,20 +64,6 @@ module.exports = {
             'vendor/font-awesome/less/font-awesome.less',
             source + 'app/**/*.less'
         ]
-    },
-    vendor_files: {
-        js: [
-            'vendor/angular/angular.js',
-            'vendor/angular-sanitize/angular-sanitize.js',
-            'vendor/angular-messages/angular-messages.js',
-            'vendor/angular-animate/angular-animate.js',
-            'vendor/angular-touch/angular-touch.js',
-            'vendor/angular-ui-router/release/angular-ui-router.js',
-            'vendor/jquery/dist/jquery.js',
-            'vendor/ordercloud-angular-sdk/dist/ordercloud-angular-sdk.js'
-        ],
-        css: [],
-        assets: []
     }
 
 };

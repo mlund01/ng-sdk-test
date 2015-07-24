@@ -1,8 +1,11 @@
 //Global gulp variables
 gulp = require('gulp');
-config = require('./gulpConfig');
 var fs = require('fs');
+config = require('./gulpConfig');
 var path = require('path');
+
+
+
 
 function walk(curDirPath) {
     fs.readdirSync(curDirPath).forEach(
@@ -16,8 +19,8 @@ function walk(curDirPath) {
         }
     });
 }
+
+
 walk(path.join(__dirname, config.gulp_dir));
 
-gulp.task('default', ['clean']);
 
-gulp.task('copy', ['build:copy_assets', 'build:copy_js']);
