@@ -8,18 +8,19 @@ var filter = require('gulp-filter');
 var wrap = require('gulp-wrapper');
 var html2js = require('gulp-html2js');
 var clean = require('gulp-clean');
+var ngAnnotate = require('gulp-ng-annotate');
+
 
 var pkg = require('../package.json');
 var banner = config.banner;
 var currVersion = pkg.name + "-" + pkg.version;
 var appJS = config.app_files.js;
-var jsFilter = filter('**/*.js');
 
 
 gulp.task('build:js_bower', ['clean:js_bower'], function() {
     return gulp
         .src(mainBowerFiles())
-        .pipe(jsFilter)
+        .pipe(filter('**/*.js'))
         .pipe(gulp.dest(config.build + 'vendor'));
 });
 
@@ -32,6 +33,7 @@ gulp.task('clean:js_bower', function() {
 gulp.task('build:copy_js', ['clean:copy_js'], function() {
     return gulp
         .src('./src/**/*.js')
+        .pipe(ngAnnotate())
         .pipe(wrap({
             header: "(function ( window, angular, undefined ) {\n 'use strict';\n",
             footer: "})( window, window.angular );\n"
@@ -53,21 +55,21 @@ gulp.task('build:templateCache', ['clean:templateCache'], function() {
             outputModuleName: 'templates-app',
             useStrict: true }))
         .pipe(concat('template-app.js'))
-        .pipe(gulp.dest(config.build));
+        .pipe(gulp.dest(config.build + 'src/'));
 });
 
 gulp.task('clean:templateCache', function() {
     return gulp
-        .src(config.build + 'template-app.js', {read:false})
+        .src(config.build + 'src/template-app.js', {read:false})
         .pipe(clean());
 });
 
 gulp.task('compile:js', ['clean:compile_js', 'build:js_bower', 'build:copy_js', 'build:templateCache'], function() {
     return gulp
-        .src(config.build + '**/*.js')
+        .src([config.build + 'vendor/angular.js', config.build + 'vendor/**/*.js', config.build + 'src/**/*.js'])
         //TODO: Name concated file?
         .pipe(concat('app.js'))
-        .pipe(uglify())
+        /*.pipe(uglify({mangle:false}))*/
         .pipe(header(banner, {pkg: pkg}))
         .pipe(gulp.dest(config.compile + 'assets'));
 });

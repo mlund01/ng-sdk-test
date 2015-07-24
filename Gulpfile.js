@@ -1,7 +1,7 @@
 //Global gulp variables
 var gulp = require('gulp');
 var fs = require('fs');
-var config = require('./gulpConfig');
+config = require('./gulpConfig');
 var path = require('path');
 
 
