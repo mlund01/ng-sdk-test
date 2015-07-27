@@ -1,20 +1,18 @@
 var gulp = require('gulp');
 var inject = require('gulp-inject');
 var clean = require('gulp-clean');
-var jshint = require('gulp-jshint');
-var sequence = require('gulp-sequence');
 var pkg = require('../package.json');
 var currVersion = pkg.name + "-" + pkg.version;
 
 
-gulp.task('compile', ['compile:js', 'compile:assets', 'compile:css'], function() {
+gulp.task('compile:inject', function() {
     return gulp.src(config.source + 'index.html')
         .pipe(inject(gulp.src(config.compile + '/**/*', {read:false}), {ignorePath: config.compile.replace('.', ''), addRootSlash: false}))
         .pipe(gulp.dest(config.compile));
 
 });
 
-gulp.task('build', ['build:js_bower', 'build:copy_js', 'build:templateCache', 'build:css', 'build:assets'], function() {
+gulp.task('build:inject', function() {
     //task injects dep into index.html
     return gulp
         .src(config.source + 'index.html')
@@ -33,3 +31,15 @@ gulp.task('masterClean', function() {
         .src([config.build, config.compile, config.temp])
         .pipe(clean({read:false}));
 });
+
+//Major Project Build Tasks
+gulp.task('build', gulp.series(
+    'masterClean',
+    gulp.parallel('build:js_bower', 'build:js', 'build:templateCache', 'build:css', 'build:assets'),
+    'build:inject'));
+
+//Major Project Compile Tasks
+gulp.task('compile', gulp.series(
+    'masterClean',
+    gulp.parallel('compile:js', 'compile:assets', 'compile:css'),
+    'compile:inject'));

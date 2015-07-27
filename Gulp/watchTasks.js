@@ -1,7 +1,7 @@
 gulp = require('gulp');
-nodemon = require('gulp-nodemon');
 jshint = require('gulp-jshint');
 mainBowerFiles = require('main-bower-files');
+var watch = require('gulp-watch');
 
 var server = 'server.js';
 var vendorJS = mainBowerFiles({filter:'**/*.js'});
@@ -17,7 +17,7 @@ browserSync.emitter.on('init', function() {
 gulp.task('dev', function() {
     browserSync.init({
         server: {
-            baseDir: config.compile,
+            baseDir: config.build,
             index: 'index.html',
             routes: ''
         },
@@ -32,35 +32,26 @@ gulp.task('dev', function() {
     })
 });
 
-gulp.task('watch', ['dev'], function() {
-    //appjs
-    gulp.watch(config.app_files.js, ['build:copy_js'], function() {
-        console.log('File ' + event.path + ' was ' + event.type + ', restarting server...');
-        browserSync.reload();
-    });
-    //bowerjs
-    gulp.watch(vendorJS, ['build:js_bower'], function() {
-        console.log('File ' + event.path + ' was ' + event.type + ', restarting server...');
-        browserSync.reload();
-    });
-//bowercss
-    gulp.watch(vendorCSS, ['build:vendor_css'], function() {
-        console.log('File ' + event.path + ' was ' + event.type + ', restarting server...')
-    });
-//templates
-    gulp.watch(config.app_files.atpl, [], function() {
-        console.log('File ' + event.path + ' was ' + event.type + ', restarting server...')
-    });
-//index
-    gulp.watch(config.source + config.index, [], function() {
-        console.log('File ' + event.path + ' was ' + event.type + ', restarting server...')
-    });
-//assets
-    gulp.watch(config.app_files.assets, ['build:css'], function() {
-        console.log('File ' + event.path + ' was ' + event.type + ', restarting server...')
-    });
-//styles
-    gulp.watch(config.supportedStyles, ['build:css'], function() {
-        console.log('File ' + event.path + ' was ' + event.type + ', restarting server...')
-    });
+gulp.task('watch:js', function() {
+    console.log("running 'watch:js' task");
+    gulp.watch(config.source + '**/*', gulp.series('compile:js'));
+    gulp.watch(config.app_files.js, gulp.series('build:js', 'build:inject', function() {browserSync.reload()}));
+    gulp.watch(vendorJS, gulp.series('build:js_bower', 'build:inject', function() {browserSync.reload()}));
 });
+
+gulp.task('watch:assets', function() {
+    console.log("running 'watch:assets' task");
+    gulp.watch(config.app_files.assets, gulp.series('build:assets', 'build:inject', function() {browserSync.reload()}));
+    gulp.watch(config.supportedStyles, gulp.series('build:css'));
+});
+
+gulp.task('watch:other', function() {
+    console.log("running 'watch:other' task");
+    gulp.watch(config.app_files.atpl, gulp.series('build:templateCache', 'build:inject', function() {browserSync.reload()}));
+    gulp.watch(config.source + config.index, gulp.series( 'build:inject', function() {browserSync.reload()}));
+});
+
+    //TODO: need to add new/deleted file watch if it ever comes available in gulp 4.0
+
+
+gulp.task('watch', gulp.parallel('dev','watch:js', 'watch:assets', 'watch:other'));

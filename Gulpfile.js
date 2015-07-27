@@ -5,9 +5,15 @@ config = require('./gulpConfig');
 var path = require('path');
 
 
+//require gulpfiles in order...
 
+require('./Gulp/testTasks');
+require('./Gulp/scriptTasks');
+require('./Gulp/assetTasks');
+require('./Gulp/generalTasks');
+require('./Gulp/watchTasks');
 
-function walk(curDirPath) {
+/*function walk(curDirPath) {
     fs.readdirSync(curDirPath).forEach(
         function (name) {
         var filePath = path.join(curDirPath, name);
@@ -21,6 +27,7 @@ function walk(curDirPath) {
 }
 
 
-walk(path.join(__dirname, config.gulp_dir));
+walk(path.join(__dirname, config.gulp_dir));*/
+
 
 
