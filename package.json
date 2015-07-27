@@ -3,7 +3,7 @@
   "name": "OrderCloud",
   "version": "0.0.3",
   "homepage": "https://github.com/Four51/OrderCloud-Seed-AngularJS",
-  "licenses": {
+  "license": {
     "type": "MIT",
     "url": "https://raw.github.com/Four51/OrderCloud-Seed-AngularJS/master/LICENSE"
   },
@@ -40,7 +40,8 @@
     "gulp-wrapper": "^1.0.0",
     "json-file-plus": "^3.0.0",
     "karma": "^0.12.31",
-    "karma-firefox-launcher": "^0.1.4",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-firefox-launcher": "^0.1.6",
     "karma-jasmine": "^0.1.5",
     "main-bower-files": "^2.9.0",
     "npm": "^2.13.0",

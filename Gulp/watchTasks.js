@@ -2,6 +2,7 @@ gulp = require('gulp');
 jshint = require('gulp-jshint');
 mainBowerFiles = require('main-bower-files');
 var watch = require('gulp-watch');
+var karma = require('gulp-karma');
 
 var server = 'server.js';
 var vendorJS = mainBowerFiles({filter:'**/*.js'});
@@ -27,10 +28,18 @@ gulp.task('dev', function() {
             forms: true,
             scroll: true
         },
-        logLevel: 'debug',
         logPrefix: 'OrderCloud 3.0'
     })
 });
+
+gulp.task('karma:unit', function() {
+    return gulp.src([config.build + '**/*.spec.js'])
+        .pipe(karma({
+            configFile:'karma.conf.js',
+            action: 'watch'
+        }))
+});
+
 
 gulp.task('watch:js', function() {
     console.log("running 'watch:js' task");
@@ -54,4 +63,4 @@ gulp.task('watch:other', function() {
     //TODO: need to add new/deleted file watch if it ever comes available in gulp 4.0
 
 
-gulp.task('watch', gulp.parallel('dev','watch:js', 'watch:assets', 'watch:other'));
+gulp.task('watch', gulp.parallel('dev','watch:js', 'watch:assets', 'watch:other', 'karma:unit'));
