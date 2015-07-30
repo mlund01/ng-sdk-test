@@ -7,3 +7,13 @@ compile2
 node_modules/
 vendor/
 temp/
+.idea/.name
+.idea/OrderCloud-Seed-AngularJS-Gulp.iml
+.idea/codeStyleSettings.xml
+.idea/jsLibraryMappings.xml
+.idea/libraries/OrderCloud_Seed_AngularJS_Gulp_node_modules.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/watcherTasks.xml
+.idea/workspace.xml

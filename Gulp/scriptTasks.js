@@ -32,7 +32,7 @@ gulp.task('b_c:js_bower', function() {
 
 gulp.task('b_m:js', function() {
     return gulp
-        .src('./src/**/*.js')
+        .src(['./src/**/*.js', '!./src/**/*spec.js'])
         .pipe(ngAnnotate())
         .pipe(wrap({
             header: "(function ( window, angular, undefined ) {\n 'use strict';\n",

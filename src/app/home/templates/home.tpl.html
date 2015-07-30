@@ -1,5 +1,14 @@
-<article am-layout="vertical-center" am-padding="large">
-	<h1>OrderCloud AngularJS Seed</h1>
-	<p>Everything you need to kickstart AngularJS projects for OrderCloud: a best-practice directory structure, an intelligent build system, and the best web design libraries around.</p>
-	<p>{{home.example}}</p>
+<article am-layout="vertical-center" am-padding="large" >
+	<form am-layout="vertical" ng-submit="home.authenticate()">
+		<fieldset am-layout="stack">
+			<div role="group">
+				<label for="username">Username:</label>
+				<input type="text" id="username" ng-model="home.credentials.Username" ng-required="true"/>
+				<label for="password">Username:</label>
+				<input type="password" id="password" ng-model="home.credentials.Password" ng-required="true"/>
+			</div>
+			<button type="submit" class="am-btn am-primary">Authenticate</button>
+		</fieldset>
+	</form>
+	<h5>{{home.example}}</h5>
 </article>

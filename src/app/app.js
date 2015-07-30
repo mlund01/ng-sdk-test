@@ -21,10 +21,15 @@ angular.module( 'orderCloud', [
 	 .constant('clientid', '8ec8ecdb-ccef-4294-802e-2c863cf061df')
 	 */
 
-	//Local
+
+	 .constant('authurl', 'https://qaauth.ordercloud.io/oauth/token')
+	 .constant('apiurl', 'https://qaapi.ordercloud.io/v1')
+	 .constant('clientid', '9f5c7f95-ab6a-4dac-85c1-2b0b6e26d0b6')
+
+/*	//Local
 	.constant('authurl', 'http://core.four51.com:11629/OAuth/token')
 	.constant('apiurl', 'http://core.four51.com:9002/v1')
-	.constant('clientid', '5e841037-b21c-4784-8cbb-746c4f1468ed')
+	.constant('clientid', '5e841037-b21c-4784-8cbb-746c4f1468ed')*/
 ;
 
 function AppCtrl( $scope ) {

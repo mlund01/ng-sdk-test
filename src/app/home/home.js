@@ -15,7 +15,13 @@ function HomeConfig( $stateProvider ) {
 	});
 }
 
-function HomeController( ) {
+function HomeController(Credentials) {
 	var vm = this;
 	vm.example = 'Example Data';
+	vm.authenticate = function() {
+		Credentials.Get(vm.credentials)
+			.then(function(creds) {
+				vm.example = creds;
+			})
+	}
 }
