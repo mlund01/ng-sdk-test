@@ -18,6 +18,7 @@ gulp.task('build:inject', function() {
         .src(config.source + 'index.html')
         .pipe(inject(gulp.src([config.build + 'vendor/**/angular.js', config.build + 'vendor/**/*.js'], {read:false}), {name: 'bower', ignorePath: config.build.replace('.', ''), addRootSlash: false}))
         .pipe(inject(gulp.src([
+            config.build + 'src/ngSdkHelper.js',
             config.build + '**/*.js',
             config.build + 'assets/**/*.css',
             "!" + config.build + 'src/**/*.spec.js',
