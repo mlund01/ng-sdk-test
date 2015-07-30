@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # OrderCloud Seed - AngularJS
 A seed project for custom Four51 Solutions built on AngularJS
 ***
@@ -268,3 +269,6 @@ $ grunt
 
 This will perform a build and then a compile. The compiled site is located in `compile/`.
 To test that your full site works as expected, open the `compile/index.html` file in your browser. Voila!
+=======
+# ng-sdk-test
+>>>>>>> 8ea59fccaea3a943846a24c14f21a3800a34cf2b
