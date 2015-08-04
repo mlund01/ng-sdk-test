@@ -43,7 +43,7 @@ gulp.task('karma:unit', function() {
 
 gulp.task('watch:js', function() {
     console.log("running 'watch:js' task");
-    gulp.watch(config.source + '**/*', gulp.series('compile:js'));
+    //gulp.watch(config.source + '**/*', gulp.series('build:js'));
     gulp.watch(config.app_files.js, gulp.series('build:js', 'build:inject', function() {browserSync.reload()}));
     gulp.watch(vendorJS, gulp.series('build:js_bower', 'build:inject', function() {browserSync.reload()}));
 });

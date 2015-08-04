@@ -43,7 +43,7 @@ gulp.task('b_m:js', function() {
 
 gulp.task('b_c:js', function() {
     return gulp
-        .src(config.build + 'src', {read:false})
+        .src([config.build + 'src/**/*.js', '!' + config.build + 'src/**/templates-app.js'], {read:false})
         .pipe(clean());
 });
 
@@ -59,7 +59,7 @@ gulp.task('b_m:templateCache', function() {
 
 gulp.task('b_c:templateCache', function() {
     return gulp
-        .src(config.build + 'src/template-app.js', {read:false})
+        .src(config.build + 'src/templates-app.js', {read:false})
         .pipe(clean());
 });
 

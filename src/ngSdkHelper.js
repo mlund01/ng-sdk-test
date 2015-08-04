@@ -40,12 +40,14 @@ function ObjectBuilderFactory($q, Orders, LineItems, Users, Categories) {
 
     function listLineItems(buyerID, orderID) {
         var dfd = $q.defer();
+        var finishCount = 1;
         var lineItems = LineItems.List(buyerID, orderID);
         for (var i = 0; i < lineItems.Items.length; i++) {
             LineItems.Get(buyerID, orderID, lineItems.Items[i].ID)
                 .then(function(data) {
+                    finishCount++;
                     lineItems.Items[i].LineItem = data;
-                    if (i == (lineItems.Items.length - 1)) {
+                    if (finishCount == (lineItems.Items.length)) {
                         dfd.resolve(lineItems);
                     }
                 })
@@ -87,16 +89,16 @@ function ObjectBuilderFactory($q, Orders, LineItems, Users, Categories) {
     function _getCategoryTree (buyerID) {
         var dfd = $q.defer();
         var pageSize = 20;
-        Categories(buyerID,"", 1, pageSize)
+        Categories.List(buyerID, null, 1, pageSize)
             .then(function(data) {
                 var pages = data.Meta.TotalPages;
             })
             .catch(dfd.reject(reason));
 
         for (var i = 1; i <= pages; i++) {
-            Categories(buyerID,"", i, pageSize)
+            Categories.List(buyerID,"", i, pageSize)
                 .then(function(data) {
-                    addCategoryDetails(data.Items)
+                    addCatAssignmentDetails(buyerID, data.Items)
                         .then(function(data) {
 
                         })
@@ -104,7 +106,40 @@ function ObjectBuilderFactory($q, Orders, LineItems, Users, Categories) {
         }
     }
 
-    function addCategoryDetails(tree) {}
+    function _getCategoryTreeWithAssignments (buyerID, groupID, userID) {
+        _getCategoryTree(buyerID, groupID, userID)
+            .then(function(data) {
+
+            })
+    }
+
+    function addCatAssignmentDetails(buyerID, categories) {
+        var dfd = $q.defer();
+        var catCount = 0;
+        categories.forEach(function(cat) {
+            getCatAssignmentPageCount(buyerID, cat)
+                .then(function(pageCount) {
+                    var pages = pageCount;
+                    for (var i = 0; i < pages; i++) {
+                        Categories.ListCategoryAssignments(buyerID, "", "", "",cat.CategoryID, i, 20)
+                            .then(function(data) {
+                                data.Items.forEach(function(item) {
+
+                                })
+                            })
+                    }
+                });
+        })
+    }
+
+    function getCatAssignmentPageCount(buyerID, category) {
+        var dfd = $q.defer();
+        Categories.ListCategoryAssignments(buyerID, "", "", "", cat.CategoryID, 1, 20)
+            .then(function(data) {
+                dfd.resolve(data.Meta.TotalPages);
+            })
+        return dfd.promise;
+    }
 
     function _getSubCategoryTree () {
 

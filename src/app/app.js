@@ -5,7 +5,8 @@ angular.module( 'orderCloud', [
 	'ngMessages',
 	'ngTouch',
 	'ui.router',
-	'orderCloud.sdk'
+	'orderCloud.sdk',
+	'ngMaterial'
 ])
 
 	.config( Routing )
@@ -23,8 +24,8 @@ angular.module( 'orderCloud', [
 
 
 	 .constant('authurl', 'https://qaauth.ordercloud.io/oauth/token')
-	 .constant('apiurl', 'https://qaapi.ordercloud.io/v1')
-	 .constant('clientid', '9f5c7f95-ab6a-4dac-85c1-2b0b6e26d0b6')
+	 .constant('apiurl', 'https://qaapi.ordercloud.io')
+	 .constant('clientid', '16691dca-434a-4995-a366-480224eb86f7')
 
 /*	//Local
 	.constant('authurl', 'http://core.four51.com:11629/OAuth/token')
@@ -41,7 +42,7 @@ function AppCtrl( $scope ) {
 	});
 }
 
-function Routing( $urlRouterProvider, $urlMatcherFactoryProvider ) {
+function Routing( $urlRouterProvider, $urlMatcherFactoryProvider) {
 	$urlMatcherFactoryProvider.strictMode(false);
 	$urlRouterProvider.otherwise( '/home' );
 	//$locationProvider.html5Mode(true);

@@ -1,0 +1,32 @@
+<!--<article layout-align="center center" >
+    <form layout="column" ng-submit="catalog.getCategories()">
+        <fieldset>
+            <button type="submit" class="am-btn am-primary">Show Categories</button>
+        </fieldset>
+    </form>
+    <table>
+        <thead>
+        <tr>
+            <th ng-repeat="key in catalog.data[1].keys()">{{key}}</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="category in catalog.data">
+                <td ng-repeat="entry in category">{{entry}}</td>
+            </tr>
+        </tbody>
+    </table>
+</article>-->
+
+
+<md-content class="catalog">
+    <section layout="row" layout-sm="column" layout-align="center center">
+        <md-button ng-click="catalog.show('getFullOrder')" class="md-raised">Get Full Order</md-button>
+        <md-button ng-click="catalog.show('getFullUser')" class="md-raised">Get Full User</md-button>
+        <md-button ng-click="catalog.show('getCatalogTree')" class="md-raised">Get Catalog Tree</md-button>
+        <md-button ng-click="catalog.show('getMultLineItems')" class="md-raised">Add Multiple Line Items</md-button>
+    </section>
+    <section layout="row" layout-align="center center" class="center-container">
+        <h2 ng-if="catalog.currentView == ''">{{catalog.welcomeMessage}}</h2>
+    </section>
+</md-content>
